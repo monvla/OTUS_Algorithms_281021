@@ -14,8 +14,7 @@ MAGIC_CONDITIONS = [
     lambda x, y: x == int(y / 2),
     lambda x, y: x == 1 or y == 1 or y == 23 or x == 23,
     lambda x, y: x / 24 == 1 or y / 24 == 1 or x / 1 == 0 or y / 1 == 0,
-    lambda x, y: x % 6 == 0 or y % 6 == 0,
-    lambda x, y: six(x) < cos(y),
+    lambda x, y: x % 6 == 0 or y % 6 == 0
 ]
 
 def show_some_magic(magic_condition):
