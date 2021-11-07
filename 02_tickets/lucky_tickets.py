@@ -1,5 +1,5 @@
 import pathlib
-from сonsole_tester import *
+from console_tester import *
 
 class LuckyTickets(Task):
 

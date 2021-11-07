@@ -1,5 +1,5 @@
 import pathlib, os
-from сonsole_tester import *
+from console_tester import *
 
 
 class TaskString(Task):
