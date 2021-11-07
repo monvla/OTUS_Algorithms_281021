@@ -24,13 +24,16 @@ class Tester:
 				not os.path.isfile(out_file_path)):
 				break;
 			time_start = time.perf_counter()
-			result = self.run_test(in_file_path, out_file_path)
+			expect, actual = self.run_test(in_file_path, out_file_path)
 			elapsed_time = time.perf_counter() - time_start
-			print("Test №%s - %s; elapsed time: %s" % (
+			is_passed = expect == actual
+			print("Test №%s - %s; %s" % (
 				test_number,
-				"passed" if result else "failed",
+				"passed" if is_passed else "failed",
 				f"Elapsed time: {elapsed_time:0.8f} seconds")
 			)
+			if not is_passed:
+				print("Expect: %s; actual: %s" % (expect, actual))
 			test_number += 1
 
 	def run_test(self, in_file, out_file):
@@ -39,4 +42,4 @@ class Tester:
 		with open(out_file) as f:
 			expect = f.read().strip()
 		actual = self.task.run(data)
-		return expect == actual
+		return expect, actual
