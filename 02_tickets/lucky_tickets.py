@@ -1,53 +1,6 @@
 import pathlib
 from console_tester import *
 
-"""
-Одна часть билета
-
-В списке self.digits храню отдельные числа для их дальнейшего суммирования
-"""
-
-
-class LuckyTicketPart:
-    def __init__(self, n):
-        self.size_of_part = n
-        self.digits = [0 for _ in range(n)]
-
-    """
-    Имитирую логику увеличения обычного числа на 1, но вместо числа массив
-    """
-
-    def increase(self):
-        # Кол-во цифр
-        total_length = len(self.digits)
-        # Текущий индекс списка цифр на проверке
-        checking_index = total_length - 1
-        # Нахожу крайнее число слева для увеличения на 1
-        while checking_index > 0 and self.digits[checking_index] == 9:
-            checking_index -= 1
-        # Если крайнее число слева равно 9, ничего не делаю
-        if checking_index == 0 and self.digits[checking_index] == 9:
-            return
-
-        # Увеличиваю проверяемое число на 1
-        self.digits[checking_index] += 1
-        # Все остальные числа справа приравниваю к 0
-        if checking_index < total_length - 1:
-            decrease_number_index = checking_index + 1
-            while decrease_number_index <= total_length - 1:
-                self.digits[decrease_number_index] = 0
-                decrease_number_index += 1
-
-    """
-    Возвращаю сумму текущих цифр в билете
-    """
-
-    def get_sum(self):
-        sum = 0
-        for digit in self.digits:
-            sum += digit
-        return sum
-
 
 class LuckyTickets(Task):
 
@@ -62,15 +15,26 @@ class LuckyTickets(Task):
         # self.run_recursive()
         return self.prepare_result(self.count)
 
+    def get_next_array(self, previous_array):
+        new_len = len(previous_array) + 9
+        next_array = []
+        for i in range(new_len):
+            new_value = 0
+            for j in range(10):
+                append_index = i - j
+                if 0 <= append_index < len(previous_array):
+                    new_value += previous_array[append_index]
+            next_array.append(new_value)
+        return next_array
+
     def run_iterations(self):
-        part1 = LuckyTicketPart(self.n)
-        for _ in range(pow(10, self.n)):
-            part2 = LuckyTicketPart(self.n)
-            for _ in range(pow(10, self.n)):
-                if part1.get_sum() == part2.get_sum():
-                    self.count += 1
-                part2.increase()
-            part1.increase()
+        array = []
+        for i in range(10):
+            array.append(1)
+        for i in range(self.n - 1):
+            array = self.get_next_array(array)
+        for i in array:
+            self.count += i * i
 
     def run_recursive(self):
         self.next_digits(0, 0, 0)
