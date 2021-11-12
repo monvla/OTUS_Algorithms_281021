@@ -12,8 +12,8 @@ class PowerAlgo(Task):
         power = int(data[1])
         multiplier = float(data[0])
         # result = self.solve_with_iterations(power, multiplier)
-        result = self.solve_binary(power, multiplier)
-        # result = self.solve_with_multiplying(power, multiplier)
+        # result = self.solve_binary(power, multiplier)
+        result = self.solve_with_multiplying(power, multiplier)
         return self.prepare_result(round(result, 11))
 
     def solve_with_iterations(self, power, multiplier):

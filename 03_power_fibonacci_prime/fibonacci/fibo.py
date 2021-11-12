@@ -44,7 +44,7 @@ class FiboAlgo(Task):
         # result = self.solve_with_recursion(needed_fibo_value)
         # result = self.solve_with_iterations(needed_fibo_value)
         # result = self.solve_golden(needed_fibo_value)
-        result = self.solve_matrix(needed_fibo_value)
+        # result = self.solve_matrix(needed_fibo_value)
         return self.prepare_result(result)
 
     def fibo_rec(self, n):
