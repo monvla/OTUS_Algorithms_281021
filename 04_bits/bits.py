@@ -76,14 +76,14 @@ class BitsKnight(BitsTask):
 class BitsRook(BitsTask):
 
     def run(self, data):
-        R = 1 << int(data[0])
+        position = int(data[0])
+        R = 1 << position
 
         rook_row = 255
-        while R & rook_row == 0:
-            rook_row <<= 8
-        rook_moves = R ^ rook_row
-        rook_moves |= (R >> 8) | (R >> 16) | (R >> 24) | (R >> 32) | (R >> 40) | (R >> 48) | (R >> 56)
-        rook_moves |= (R << 8) | (R << 16) | (R << 24) | (R << 32) | (R << 40) | (R << 48) | (R << 56)
+        rook_col = 72340172838076673
+        rook_row <<= 8 * int(position / 8)
+        rook_col <<= 1 * (position % 8)
+        rook_moves = R ^ rook_row | R ^ rook_col
         rook_moves &= self.clear_overflow
         count = self.population_counter_cached(rook_moves)
         return self.prepare_result("%s\n%s" % (count, rook_moves))
