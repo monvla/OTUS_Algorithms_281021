@@ -19,11 +19,6 @@ public class FactorArray<T> implements IArray<T> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    @Override
     public void add(T item) {
         resize();
         array[count++] = item;

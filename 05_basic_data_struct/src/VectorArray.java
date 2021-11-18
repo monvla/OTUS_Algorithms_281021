@@ -25,11 +25,6 @@ public class VectorArray<T> implements IArray<T> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    @Override
     public void add(T item) {
         array[count++] = item;
         resize();

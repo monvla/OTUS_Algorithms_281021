@@ -21,11 +21,6 @@ public class MatrixArray<T> implements IArray<T> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    @Override
     public void add(T item) {
         if (valueIndex == NEW_ARRAY_LENGTH) {
             resize();

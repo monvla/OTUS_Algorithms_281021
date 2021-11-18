@@ -21,7 +21,7 @@ public class Main {
         }
         array.removeLast();
         array.removeLast();
-        System.out.println("count: " + array.count());
+        System.out.println("items count: " + array.count());
         System.out.println("size: " + array.size());
         System.out.println("get 1000 item: " + array.get(1000));
         System.out.println("add: " + (System.currentTimeMillis() - start) + " ms");
