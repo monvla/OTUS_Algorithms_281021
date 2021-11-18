@@ -81,9 +81,9 @@ class BitsRook(BitsTask):
 
         rook_row = 255
         rook_col = 72340172838076673
-        rook_row <<= 8 * int(position / 8)
-        rook_col <<= 1 * (position % 8)
-        rook_moves = R ^ rook_row | R ^ rook_col
+        rook_row <<= position & 248
+        rook_col <<= position & 7
+        rook_moves = R ^ (rook_row | rook_col)
         rook_moves &= self.clear_overflow
         count = self.population_counter_cached(rook_moves)
         return self.prepare_result("%s\n%s" % (count, rook_moves))
