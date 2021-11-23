@@ -25,7 +25,36 @@ public class SingleArray<T> implements IArray<T> {
 
     @Override
     public T get(int index) {
-        return array[index];
+        try {
+            return array[index];
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void insert(T item, int index) {
+        if (index > count() - 1) {
+            add(item);
+            return;
+        }
+        T[] newArray = (T[]) new Object[array.length + 1];
+        System.arraycopy(array, 0, newArray, 0, index);
+        System.arraycopy(array, index, newArray, index + 1, array.length - index);
+        array = newArray;
+        array[index] = item;
+        count++;
+    }
+
+    @Override
+    public void remove(int index) {
+        if (index < 0 || index > count()) {
+            return;
+        }
+        T[] newArray = (T[]) new Object[count - 1];
+        System.arraycopy(array, 0, newArray, 0, index);
+        System.arraycopy(array, index + 1, newArray, index, newArray.length - index);
+        array = newArray;
     }
 
     @Override

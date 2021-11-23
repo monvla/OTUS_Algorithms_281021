@@ -4,4 +4,6 @@ public interface IArray<T> {
     void add(T item);
     void removeLast();
     T get(int index);
+    void insert(T item, int index);
+    void remove(int index);
 }
