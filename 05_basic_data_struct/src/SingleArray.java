@@ -53,7 +53,9 @@ public class SingleArray<T> implements IArray<T> {
         }
         T[] newArray = (T[]) new Object[count - 1];
         System.arraycopy(array, 0, newArray, 0, index);
-        System.arraycopy(array, index + 1, newArray, index, newArray.length - index);
+        for (int i = index; i < newArray.length - 1; i++) {
+            newArray[i] = array[i+1];
+        }
         array = newArray;
     }
 
