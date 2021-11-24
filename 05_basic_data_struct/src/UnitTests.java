@@ -169,7 +169,7 @@ public class UnitTests {
         assert single.get(12) == 13;
         assert vector.get(12) == 13;
         assert factor.get(12) == 13;
-//        assert matrix.get(12) == 13;
+        assert matrix.get(12) == 13;
     }
 
     private void fillArray(IArray<Integer> array, int size) {

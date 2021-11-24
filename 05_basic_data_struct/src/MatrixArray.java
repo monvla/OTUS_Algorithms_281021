@@ -22,7 +22,7 @@ public class MatrixArray<T> implements IArray<T> {
     @Override
     public void add(T item) {
         if (valueIndex == NEW_ARRAY_LENGTH) {
-            array = resizeArray(array);
+            array = resizeArray(array, true);
             valueIndex = 0;
         }
         array[array.length-1][valueIndex++] = item;
@@ -37,9 +37,18 @@ public class MatrixArray<T> implements IArray<T> {
         }
     }
 
-    private T[][] resizeArray(T[][] array) {
-        T[][] newArray = (T[][]) new Object[array.length + 1][NEW_ARRAY_LENGTH];
+    private T[][] resizeArray(T[][] array, boolean isIncreasing) {
+        int newArrayLength;
+        if (isIncreasing) {
+            newArrayLength = array.length + 1;
+        } else {
+            newArrayLength = array.length - 1;
+        }
+        T[][] newArray = (T[][]) new Object[newArrayLength][NEW_ARRAY_LENGTH];
         for (int i = 0; i < array.length; i++) {
+            if (array[i][0] == null) {
+                break;
+            }
             newArray[i] = array[i];
         }
         return newArray;
@@ -66,7 +75,7 @@ public class MatrixArray<T> implements IArray<T> {
                 break;
             }
             if (newArray.length == (swapIndex + 1) / NEW_ARRAY_LENGTH) {
-                newArray = resizeArray(newArray);
+                newArray = resizeArray(newArray, true);
             }
             newArray[(swapIndex + 1) / NEW_ARRAY_LENGTH][(swapIndex + 1) % NEW_ARRAY_LENGTH]
                     = array[swapIndex / NEW_ARRAY_LENGTH][swapIndex % NEW_ARRAY_LENGTH];
@@ -80,6 +89,31 @@ public class MatrixArray<T> implements IArray<T> {
     public void remove(int index) {
         if (index < 0 || index > count()) {
             return;
+        }
+
+        T[][] newArray = (T[][]) new Object[array.length][NEW_ARRAY_LENGTH];
+        for (int i = 0; i < (index / NEW_ARRAY_LENGTH); i++) {
+            newArray[i] = array[i];
+        }
+        System.arraycopy(array[index / NEW_ARRAY_LENGTH], 0, newArray[index / NEW_ARRAY_LENGTH], 0, NEW_ARRAY_LENGTH);
+
+        int swapIndex = index;
+        while (swapIndex <= array.length * NEW_ARRAY_LENGTH) {
+            T swapItem = get(swapIndex + 1);
+            if (swapItem == null) {
+                break;
+            }
+            newArray[swapIndex / NEW_ARRAY_LENGTH][swapIndex % NEW_ARRAY_LENGTH] = swapItem;
+            swapIndex++;
+        }
+        if (newArray[array.length-1][0] == null) {
+            newArray = resizeArray(newArray, false);
+        }
+        array = newArray;
+        if (valueIndex == 1) {
+            valueIndex = NEW_ARRAY_LENGTH;
+        } else {
+            valueIndex--;
         }
     }
 
