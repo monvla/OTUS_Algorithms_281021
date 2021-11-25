@@ -23,8 +23,8 @@ public class Main {
         IArray<Integer> vector = new VectorArray<>();
         IArray<Integer> factor = new FactorArray<>();
         IArray<Integer> matrix = new MatrixArray<>();
-        calculateExecutionTime(single, total);
-//        calculateExecutionTime(vector, total);
+//        calculateExecutionTime(single, total);
+        calculateExecutionTime(vector, total);
 //        calculateExecutionTime(factor, total);
 //        calculateExecutionTime(matrix, total);
     }
