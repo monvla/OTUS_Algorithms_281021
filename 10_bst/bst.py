@@ -1,4 +1,5 @@
 import random
+import time
 
 
 class Node:
@@ -54,12 +55,6 @@ class Node:
             root.R = Node.deleteNode(root.R, minValueNode.value)
         return root
 
-    def get_larger(self):
-        return self.R
-
-    def get_smaller(self):
-        return self.L
-
 
 class BST:
     def __init__(self, root):
@@ -73,11 +68,22 @@ class BST:
     def remove(self, value):
         Node.deleteNode(self.root, value)
 
-    def find(self, value):
-        self.seek_value = value
-        self.finded_node = None
-        self.walk(self.root)
-        return self.finded_node
+    def find_value(self, value):
+        return self.search(self.root, value)
+
+    def search(self, node, value):
+        if value == node.value:
+            return True
+        if value < node.value:
+            if node.L is None:
+                return False
+            else:
+                return self.search(node.L, value)
+        else:
+            if node.R is None:
+                return False
+            else:
+                return self.search(node.R, value)
 
     def print(self):
         self.walk(self.root)
@@ -93,9 +99,8 @@ class BST:
 
     def use(self, node):
         pass
-        # print(node.value)
 
-#
+
 # bst = BST(40)
 # bst.insert(40)
 # bst.insert(20)
@@ -108,7 +113,7 @@ class BST:
 # bst.insert(26)
 # bst.remove(20)
 # bst.remove(26)
-# print(bst.find(10))
+# print(bst.find_value(10))
 
 def random_tree(N):
     tree = BST(N//2)
@@ -124,18 +129,29 @@ def sorted_tree(N):
 
 def find_in_tree(tree, N):
     for x in range(N//10):
-        tree.find(x)
+        tree.find_value(x)
 
 def remove_from_tree(tree, N):
     for x in range(N//10):
         tree.remove(x)
 
-N = 1000
+N = 10_000_000
+
+time_start = time.perf_counter()
 r_tree = random_tree(N)
-s_tree = sorted_tree(N)
+elapsed_time = (time.perf_counter() - time_start) * 1000
+print(f"Random tree insertion, elapsed time: {elapsed_time:0.0f} millis")
 
+time_start = time.perf_counter()
 find_in_tree(r_tree, N)
-remove_from_tree(r_tree, N)
+elapsed_time = (time.perf_counter() - time_start) * 1000
+print(f"Random tree search, elapsed time: {elapsed_time:0.0f} millis")
 
-find_in_tree(s_tree, N)
-remove_from_tree(s_tree, N)
+time_start = time.perf_counter()
+remove_from_tree(r_tree, N)
+elapsed_time = (time.perf_counter() - time_start) * 1000
+print(f"Random tree remove, elapsed time: {elapsed_time:0.0f} millis")
+
+# s_tree = sorted_tree(N)
+# find_in_tree(s_tree, N)
+# remove_from_tree(s_tree, N)
