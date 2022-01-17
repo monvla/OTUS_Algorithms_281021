@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Dijkstra {
 
@@ -10,9 +11,12 @@ public class Dijkstra {
         vertices = createVertices();
     }
 
-    public void run() {
+    public String getCheapestPath() {
         processVertices();
-        int i = 0;
+
+        vertices.sort(Comparator.comparingInt(vertex -> vertex.cost));
+
+        return getPath();
     }
 
     private ArrayList<Vertex> createVertices() {
@@ -35,6 +39,7 @@ public class Dijkstra {
             for (Edge edge : edges) {
                 if (edge.v1 == processingVertex.letter) {
                     Vertex destinationVertex = getVertexByLetter(edge.v2);
+                    if (destinationVertex == null) continue;
                     if (destinationVertex.cost > edge.weight) {
                         destinationVertex.cost = processingVertex.cost + edge.weight;
                         destinationVertex.intermediateVertice = processingVertex.letter;
@@ -75,10 +80,21 @@ public class Dijkstra {
 
     private Vertex getVertexByLetter(char letter) {
         for (Vertex vertex : vertices) {
-            if (vertex.letter == letter) {
+            if (vertex.letter == letter && !vertex.isProcessed()) {
                 return vertex;
             }
         }
         return null;
+    }
+
+    private String getPath() {
+        StringBuilder path = new StringBuilder();
+        for (int i = 0; i < vertices.size(); i++) {
+            path.append(vertices.get(i).letter);
+            if (i < (vertices.size() - 1)) {
+                path.append("->");
+            }
+        }
+        return path.toString();
     }
 }

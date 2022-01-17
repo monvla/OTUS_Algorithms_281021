@@ -14,7 +14,7 @@ public class Main {
         edges.add(new Edge('E', 'F', 1));
         edges.add(new Edge('D', 'F', 4));
         edges.add(new Edge('E', 'G', 5));
-        edges.add(new Edge('E', 'F', 8));
-        new Dijkstra(edges).run();
+        edges.add(new Edge('F', 'E', 1));
+        System.out.print(new Dijkstra(edges).getCheapestPath());
     }
 }
